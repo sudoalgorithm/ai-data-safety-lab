@@ -10,7 +10,8 @@ From the *Data safety and Presidio* session of FPT Middle East's **AI in Everyda
 
 | Lab | You will | Time |
 | --- | --- | --- |
-| [Setup](SETUP.md) | Install uv, download Presidio, run your first mask | 15 min |
+| [Setup](SETUP.md) · [**Windows step by step**](WINDOWS.md) | Install uv, download Presidio, run your first mask | 15–20 min |
+| [**Put Presidio in front of your AI tool**](USE-WITH-AI-TOOLS.md) | One key to mask the clipboard for Copilot; a Claude Code hook that blocks personal data | 10 min |
 | [1. Mask a text file](labs/01-mask-text.md) | Mask workshop notes and find what Presidio missed | 10 min |
 | [2. Mask a Word document](labs/02-mask-word.md) | Mask a real `.docx`, keep its layout, spot the Arabic gap | 10 min |
 | [3. Fix the misses](labs/03-fix-the-misses.md) | Add a deny list and tune the threshold | 15 min |
@@ -25,7 +26,7 @@ cd ai-data-safety-lab
 uv run presidio/show_mask.py samples/stakeholder-notes.md
 ```
 
-No uv yet? Start with [SETUP.md](SETUP.md).
+No uv yet? Start with [SETUP.md](SETUP.md), or [WINDOWS.md](WINDOWS.md) on a Windows laptop. Then set it up in front of your AI tool: [USE-WITH-AI-TOOLS.md](USE-WITH-AI-TOOLS.md).
 
 ## The rule in one picture
 
@@ -48,9 +49,12 @@ Not sure? Take the higher colour and ask your delivery manager.
 | --- | --- |
 | `presidio/gcc_presidio.py` | Presidio set up with recognisers for GCC IDs (Emirates ID, Saudi ID and Iqama, Qatar QID, Kuwait, Oman and Bahrain IDs) and GCC mobile numbers |
 | `presidio/mask.py` | Mask a text file; prints the masked text |
+| `presidio/mask_clipboard.py` | Mask whatever is on the clipboard, in place: copy, run, paste into the AI tool |
 | `presidio/show_mask.py` | The view from the session: findings highlighted, a table with confidence, then the masked text |
 | `presidio/mask_docx.py` | Mask a Word document; writes a `.found.docx` (findings in red) and a `.masked.docx` (layout kept) |
 | `presidio/pii_guard.py` | A Claude Code hook that blocks prompts containing personal data |
+| `.vscode/tasks.json` | VS Code tasks: mask clipboard, show findings, save a masked copy, mask a Word document |
+| `.claude/settings.example.json` | The Claude Code hook, ready to copy |
 | `samples/` | Synthetic DemoTel material to practise on |
 | `labs/` | The exercises |
 

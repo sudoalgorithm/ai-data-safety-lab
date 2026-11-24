@@ -41,6 +41,15 @@ def body_only(text: str) -> str:
     return "\n".join(l for l in lines if not l.startswith(">") and not l.startswith("# ")).strip() + "\n"
 
 
+def _utf8_console() -> None:
+    """Windows consoles default to a legacy code page; Arabic text would crash the script."""
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("file")
@@ -51,7 +60,7 @@ def main() -> None:
     a = ap.parse_args()
 
     con = Console(width=min(Console().width, 140))
-    raw = pathlib.Path(a.file).read_text()
+    raw = pathlib.Path(a.file).read_text(encoding="utf-8")
     text = raw if a.full else body_only(raw)
 
     with con.status("Presidio is reading the text on this laptop (nothing is sent anywhere)…"):
@@ -93,9 +102,10 @@ def main() -> None:
     if a.out:
         out = pathlib.Path(a.out)
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(masked)
+        out.write_text(masked, encoding="utf-8")
         con.print(f"Saved masked copy: [bold]{out}[/]")
 
 
 if __name__ == "__main__":
+    _utf8_console()
     main()

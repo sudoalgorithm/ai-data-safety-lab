@@ -32,6 +32,15 @@ BLOCK = {
 THRESHOLD = 0.5
 
 
+def _utf8_console() -> None:
+    """Windows consoles default to a legacy code page; Arabic text would crash the script."""
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
+
+
 def main() -> int:
     try:
         prompt = json.load(sys.stdin).get("prompt", "")
@@ -55,4 +64,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    _utf8_console()
     sys.exit(main())

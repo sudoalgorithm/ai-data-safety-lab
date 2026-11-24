@@ -1,5 +1,7 @@
 # Setup
 
+> **On a Windows laptop?** Follow [WINDOWS.md](WINDOWS.md) instead: it covers PowerShell, proxies, Arabic text and the usual Windows errors step by step.
+
 About 15 minutes, most of it the one-time download. Everything runs on your own laptop: Presidio sends nothing anywhere.
 
 ## 1. Install uv
@@ -57,7 +59,7 @@ On Windows, the commands are the same. Backslashes also work: `uv run presidio\m
 
 ## 4. You are ready
 
-Start [Lab 1](labs/01-mask-text.md).
+Start [Lab 1](labs/01-mask-text.md), and set Presidio up in front of your AI tool: [USE-WITH-AI-TOOLS.md](USE-WITH-AI-TOOLS.md).
 
 ## Troubleshooting
 

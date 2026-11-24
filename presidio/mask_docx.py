@@ -87,6 +87,15 @@ def dedupe(results):
     return sorted(keep, key=lambda r: r.start)
 
 
+def _utf8_console() -> None:
+    """Windows consoles default to a legacy code page; Arabic text would crash the script."""
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("file")
@@ -144,4 +153,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    _utf8_console()
     main()

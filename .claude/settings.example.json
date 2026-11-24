@@ -5,7 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && uv run -q presidio/pii_guard.py",
+            "command": "uv",
+            "args": ["run", "-q", "${CLAUDE_PROJECT_DIR}/presidio/pii_guard.py"],
             "timeout": 60
           }
         ]

@@ -1,0 +1,51 @@
+{
+  // Presidio tasks for VS Code. Run them from: Terminal > Run Task…  (or Ctrl+Shift+P > "Tasks: Run Task")
+  // To bind a key, see USE-WITH-AI-TOOLS.md.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Presidio: mask clipboard",
+      "detail": "Copy text, run this, then paste the masked text into Copilot Chat",
+      "type": "shell",
+      "command": "uv run -q presidio/mask_clipboard.py",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Presidio: show findings in this file",
+      "detail": "Highlights personal data in the open file and shows the masked version",
+      "type": "shell",
+      "command": "uv run -q presidio/show_mask.py \"${file}\" --full",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Presidio: save a masked copy of this file",
+      "detail": "Writes work/masked/<name>. Give THAT copy to Copilot, never the original",
+      "type": "shell",
+      "command": "uv run -q presidio/show_mask.py \"${file}\" --full --out \"work/masked/${fileBasename}\"",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Presidio: mask this Word document",
+      "detail": "Asks for a .docx path; writes .found.docx (red) and .masked.docx into work/masked",
+      "type": "shell",
+      "command": "uv run -q presidio/mask_docx.py \"${input:docxPath}\" --outdir work/masked",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "docxPath",
+      "type": "promptString",
+      "description": "Path to the Word document, relative to this folder",
+      "default": "samples/complaint-escalation-report.docx"
+    }
+  ]
+}

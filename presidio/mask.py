@@ -23,6 +23,15 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from gcc_presidio import load_deny, mask  # noqa: E402
 
 
+def _utf8_console() -> None:
+    """Windows consoles default to a legacy code page; Arabic text would crash the script."""
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):
+            pass
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("file", help="input file, or - for stdin")
@@ -33,9 +42,10 @@ def main() -> None:
     parser.add_argument("--deny", help="file with extra names or words to always mask, one per line")
     args = parser.parse_args()
 
-    text = sys.stdin.read() if args.file == "-" else pathlib.Path(args.file).read_text()
+    text = sys.stdin.read() if args.file == "-" else pathlib.Path(args.file).read_text(encoding="utf-8")
     sys.stdout.write(mask(text, args.threshold, keep_dates=not args.mask_dates, deny=load_deny(args.deny)))
 
 
 if __name__ == "__main__":
+    _utf8_console()
     main()

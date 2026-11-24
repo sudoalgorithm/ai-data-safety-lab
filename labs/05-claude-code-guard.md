@@ -8,18 +8,29 @@ The guard is a Claude Code **hook**: a small script that runs every time you pre
 
 1. Test the guard on its own first:
 
+   macOS / Linux:
+
    ```bash
    echo '{"prompt":"Write a test case for customer 784-1985-7654321-2"}' | uv run presidio/pii_guard.py
    echo "exit code: $?"
+   ```
+
+   Windows (PowerShell):
+
+   ```powershell
+   '{"prompt":"Write a test case for customer 784-1985-7654321-2"}' | uv run presidio\pii_guard.py
+   "exit code: $LASTEXITCODE"
    ```
 
    You should see `Blocked: … (AE_EMIRATES_ID)` and exit code `2`, which tells Claude Code to block the prompt.
 
 2. Switch it on for this folder only. Copy the example settings:
 
-   ```bash
-   cp .claude/settings.example.json .claude/settings.local.json
-   ```
+   | Windows (PowerShell) | macOS / Linux |
+   | --- | --- |
+   | `Copy-Item .claude\settings.example.json .claude\settings.local.json` | `cp .claude/settings.example.json .claude/settings.local.json` |
+
+   The hook runs `uv` directly (no shell), so it works the same on Windows with or without Git Bash. Details: [USE-WITH-AI-TOOLS.md](../USE-WITH-AI-TOOLS.md#2-claude-code-block-personal-data-automatically).
 
    `settings.local.json` is personal and ignored by git.
 
