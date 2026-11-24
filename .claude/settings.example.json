@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && uv run -q presidio/pii_guard.py",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

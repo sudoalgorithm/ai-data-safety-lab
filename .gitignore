@@ -1,0 +1,17 @@
+# Your lab output (masked files, deny lists)
+work/
+*.masked.*
+*.found.docx
+
+# Personal Claude Code settings
+.claude/settings.local.json
+
+# Never commit real data
+*.xlsx
+.env
+.env.*
+
+.DS_Store
+~$*
+
+__pycache__/
